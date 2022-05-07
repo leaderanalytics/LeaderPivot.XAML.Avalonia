@@ -1,0 +1,20 @@
+https://www.codeproject.com/Articles/5330464/Running-and-Debugging-Multiplatform-NET-NET-Core-N
+https://superuser.com/questions/1617298/wsl-2-running-ubuntu-x-server-cant-open-display
+
+working display:
+sam@UGLY:~$ echo $DISPLAY
+192.168.1.83:0.0
+
+
+How to create executable console app from .NET Core 2.0 in Linux?
+https://stackoverflow.com/questions/49692123/how-to-create-executable-console-app-from-net-core-2-0-in-linux
+
+
+Publish command
+dotnet publish -c release --self-contained --runtime linux-x64 --framework net6.0
+
+
+cd /tmp/avalonia
+cp /mnt/c/Projects/AvaloniaApplication1/AvaloniaApplication1/bin/release/net6.0/linux-x64/publish/* /tmp/avalonia
+
+

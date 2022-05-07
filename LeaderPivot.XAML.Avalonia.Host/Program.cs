@@ -3,7 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 using System;
 
-namespace LeaderPivot.XAML.Avalonia;
+namespace LeaderPivot.XAML.Avalonia.Host;
 internal class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any

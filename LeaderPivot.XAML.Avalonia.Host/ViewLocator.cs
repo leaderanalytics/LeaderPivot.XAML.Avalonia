@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using LeaderPivot.XAML.Avalonia.ViewModels;
+using LeaderPivot.XAML.Avalonia.Host.ViewModels;
 using System;
 
-namespace LeaderPivot.XAML.Avalonia;
+namespace LeaderPivot.XAML.Avalonia.Host;
 public class ViewLocator : IDataTemplate
 {
     public IControl Build(object data)

@@ -1,18 +1,49 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<Authors>Leader Analytics</Authors>
+	<Company>Leader Analytics</Company>
+	<Product>LeaderAnalytics.LeaderPivot.XAML.Avalonia</Product>
+	<Description>LeaderPivot pivot table control for Avalonia applications</Description>
+	<Copyright>2021 Leader Analytics</Copyright>
+	<PackageProjectUrl>https://github.com/leaderanalytics/LeaderPivot.XAML.Avalonia</PackageProjectUrl>
+	<PackageIcon>icon.png</PackageIcon>
+	<RepositoryUrl>https://github.com/leaderanalytics/LeaderPivot.XAML.Avalonia.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageTags>Leader Analytics LeaderAnalytics Pivot Table Pivot Grid Pivot Matrix Avalonia</PackageTags>
+	<PackageReleaseNotes>See Repository</PackageReleaseNotes>
+	<Version>1.0.0-beta.1</Version>
+	<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	<FileVersion>1.0.0.0</FileVersion>
+	<PackageId>LeaderAnalytics.LeaderPivot.XAML.Avalonia</PackageId>
+	<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <AvaloniaResource Include="Assets\**" />
-    <None Remove=".gitignore" />
-  </ItemGroup>
-  <ItemGroup>
+
+	<PropertyGroup>
+		<RootNamespace>LeaderAnalytics.LeaderPivot.XAML.Avalonia</RootNamespace>
+		<AssemblyName>LeaderAnalytics.LeaderPivot.XAML.Avalonia</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" PackagePath="\" />
+		<None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<Target Name="CopyPackage" AfterTargets="Pack" Condition=" '$(Configuration)'=='Debug' ">
+		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\NugetPackages\" />
+		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="c:\NugetPackages\" />
+	</Target>
+
+
+	<ItemGroup>
     <!--This helps with theme dll-s trimming.
 	If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.
 	https://github.com/AvaloniaUI/Avalonia/issues/5593 -->
@@ -20,11 +51,14 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.12" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
+    <PackageReference Include="Avalonia" Version="0.10.13" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.12" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.13" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
+	<PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.13.3" />
+	<PackageReference Include="Avalonia.Skia" Version="0.10.13" />
+	<PackageReference Include="System.Reactive" Version="5.0.0" />
+	<PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
 </Project>

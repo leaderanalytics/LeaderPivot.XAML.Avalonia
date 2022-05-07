@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeaderPivot.XAML.Avalonia.ViewModels;
+namespace LeaderPivot.XAML.Avalonia.Host.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public string Greeting => "Welcome to Avalonia!";
