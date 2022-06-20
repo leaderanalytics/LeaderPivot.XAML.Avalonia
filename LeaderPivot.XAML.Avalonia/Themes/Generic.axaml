@@ -1,0 +1,439 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:sc="clr-namespace:System.Collections;assembly=netstandard"
+		xmlns:sys="clr-namespace:System;assembly=netstandard"
+		xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+		xmlns:local="clr-namespace:LeaderAnalytics.LeaderPivot.XAML.Avalonia"
+		xmlns:converters="clr-namespace:LeaderAnalytics.LeaderPivot.XAML.Avalonia.Converters">
+	<Styles.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary>
+		            <!--<converters:SelectedItemConverter x:Key="SelectedItemConverter" />
+                    <converters:BoolToStretchConverter x:Key="BoolToStretchConverter" />-->
+                    <converters:NegateConverter x:Key="NegateConverter"/>
+		            <converters:DimensionEventArgsConverter x:Key="DimensionEventArgsConverter"/>
+		            <converters:DimensionEventCheckedConverter x:Key="DimensionEventCheckedConverter"/>
+		            <converters:DimensionEventEnabledConverter x:Key="DimensionEventEnabledConverter"/>
+		            <converters:DimensionActionDescriptionConverter x:Key="DimensionActionDescriptionConverter"/>
+				</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Styles.Resources>
+
+    
+    
+
+    <Style Selector="local|DropDownButton" >
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Margin" Value="0,0,6,0" />
+    </Style>
+        
+    <Style Selector="Button" >
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="4"/>
+    </Style>
+
+    <Style Selector="TextBlock" >
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+    <Style Selector="TextBlock" >
+        <Setter Property="TextAlignment" Value="Right"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+    </Style>
+
+    <Style Selector="local|LeaderPivotControl" >
+        <Setter Property="CellBorderBrush" Value="Black"/>
+        <Setter Property="CellBorderThickness" Value=".5"/>
+        <Setter Property="CellPadding" Value="4"/>
+		
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:LeaderPivotControl}" >
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            VerticalAlignment="Top" HorizontalAlignment="Left">
+                            
+                        <Border BorderBrush="{TemplateBinding CellBorderBrush}"
+                                BorderThickness="{TemplateBinding CellBorderThickness}"
+                                DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}" >
+
+                            <ScrollViewer x:Name="ContentScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <Grid x:Name="PART_Grid" />
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style Selector="local|CellContainer">
+        <Setter Property="Margin" Value="0.00"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate >
+                    <!-- This border provides uniform BorderBrush and BorderThickness only. --> 
+                    <Border Background="Transparent" Padding="0" 
+                            BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellBorderBrush}"
+                            BorderThickness="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellBorderThickness}"
+                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}">
+                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style Selector=":is(local|BaseCell)" >
+		<Setter Property="Background" Value="LightGray"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                 <!--This border provides cell-specific background. Also proives padding based on value provided by LeaderPivotControl-->  
+                <Border Background="{TemplateBinding Background}" BorderThickness="0" 
+                        Padding="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellPadding}">
+                    <TextBlock Text="{TemplateBinding Content}" Padding="{Binding Padding}" FontSize="{Binding FontSize}"/>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+	<Style Selector="local|MeasureCell" >
+
+
+	</Style>
+
+	<Style Selector="local|TotalCell"  >
+	</Style>
+
+	<Style Selector="local|GrandTotalCell"  >
+
+
+	</Style>
+
+	<Style Selector="local|MeasureLabelCell" >
+
+	</Style>
+
+	<Style Selector="local|MeasureTotalLabelCell" >
+
+	</Style>
+
+	<Style Selector="local|TotalHeaderCell"  >
+
+	</Style>
+
+	<Style Selector="local|GrandTotalHeaderCell"  >
+
+	</Style>
+
+	<Style Selector="local|GroupHeaderCell" >
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type local:GroupHeaderCell}">
+					<Border Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            Padding="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellPadding}"
+                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}">
+						<StackPanel Orientation="Horizontal">
+
+							<Button
+                                x:Name="btn" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:GroupHeaderCell}}"
+                                Command="{Binding ToggleNodeExpansionCommand}" 
+                                CommandParameter="{Binding NodeID}"
+                                IsVisible="{Binding CanToggleExpansion}">
+								<Button.Styles>
+									<Style Selector="Border">
+										<Setter Property="CornerRadius" Value="45"/>
+									</Style>
+									<Style Selector="Button">
+										<Setter Property="BorderThickness" Value="0"/>
+										<Setter Property="Background" Value="Transparent"/>
+										<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=local:GroupHeaderCell}, Path=Foreground}"/>
+										<Setter Property="Height" Value="25"/>
+										<Setter Property="Width" Value="25"/>
+										<Setter Property="HorizontalAlignment" Value="Left"/>
+										<Setter Property="VerticalAlignment" Value="Top"/>
+										<Setter Property="HorizontalContentAlignment" Value="Center"/>
+										<Setter Property="VerticalContentAlignment" Value="Bottom"/>
+
+										<Setter Property="FontSize" Value="12"/>
+										<Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+										<Setter Property="Margin" Value="3"/>
+										<Setter Property="Padding" Value="5,7,5,3"/>
+										<i:Interaction.Behaviors>
+											<ia:DataTriggerBehavior Binding="{Binding IsExpanded}" ComparisonCondition="Equal" Value="true">
+												<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Content" Value="&#xE936;"/>
+												<!--<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Padding" Value="5,7,5,3"/>-->
+												<!--https://github.com/wieslawsoltes/AvaloniaBehaviors/issues/59-->
+											</ia:DataTriggerBehavior>
+											<ia:DataTriggerBehavior Binding="{Binding IsExpanded}" ComparisonCondition="Equal" Value="false">
+												<!--<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Padding" Value="9,4,1,6"/>-->
+												<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Content" Value="&#xE937;"/>
+											</ia:DataTriggerBehavior>
+										</i:Interaction.Behaviors>
+									</Style>
+								</Button.Styles>
+							</Button>
+							<TextBlock Text="{TemplateBinding Content}" Padding="{Binding Padding}" Margin="0,6,0,0" FontSize="{Binding FontSize}"/>
+						</StackPanel>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style Selector="local|DimensionContainerCell">
+		<Setter Property="Padding" Value="6"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type local:DimensionContainerCell}" >
+					<Border Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            Padding="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellPadding}"
+                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}">
+
+						<ScrollViewer
+                            IsVisible="{Binding DisplayDimensionButtons}"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto"
+                            HorizontalAlignment="Left">
+							<ItemsControl Name="DimensionItems"
+                                          Items="{TemplateBinding Dimensions}"  >
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<local:DimensionButton
+                                            Content="{Binding DisplayValue}"
+                                            Dimension="{Binding}"
+                                            SelectionChangedCommand="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=DimensionEventCommand}" >
+										</local:DimensionButton>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<StackPanel Orientation="Horizontal" ></StackPanel>
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+							</ItemsControl>
+						</ScrollViewer>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style Selector="local|MeasureContainerCell">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type local:MeasureContainerCell}" >
+					<Border Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            Padding="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellPadding}"
+                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}">
+						<ScrollViewer x:Name="ContentScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<Grid x:Name="PART_Grid">
+								<Grid.RowDefinitions>
+									<RowDefinition/>
+									<RowDefinition/>
+									<RowDefinition/>
+									<RowDefinition/>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+								<Button Content="Reload Data" 
+                                        Classes.myClass="{TemplateBinding ReloadButtonStyle}" Height="25" Width="80"
+                                        Command="{Binding ReloadDataCommand}"
+                                        IsVisible="{Binding DisplayReloadDataButton}" />
+								<ItemsControl Items="{Binding ViewBuilder.Measures}" Grid.Row="1" Margin="3,10,0,0"
+                                              IsVisible="{Binding DisplayMeasureSelectors}">
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<CheckBox
+                                                Content="{Binding DisplayValue}"
+                                                IsChecked="{Binding IsEnabled}"
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=ReloadDataCommand}"
+                                                Classes.myClass="{Binding RelativeSource={RelativeSource AncestorType=local:MeasureContainerCell}, Path=MeasureCheckBoxStyle}" Padding="2" />
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+								<CheckBox Content="Grand Totals" Margin="3,0,0,0"
+                                          IsChecked="{Binding ViewBuilder.DisplayGrandTotals}" Command="{Binding ReloadDataCommand}" Padding="2"
+                                          IsVisible="{Binding DisplayGrandTotalOption}}"
+                                          Classes.myClass="{TemplateBinding MeasureCheckBoxStyle}"
+                                          Grid.Row="2" />
+
+								<local:DimensionContainerCell BorderThickness="0" Margin="0,3,0,0"
+                                    IsRows="True"
+                                    Dimensions="{Binding ViewBuilder.RowDimensions}"
+                                    Grid.Row="3"/>
+
+								<ComboBox Grid.Row="4" x:Name="HiddenDimensionsComboBox"
+                                          Classes.myClass="{TemplateBinding HiddenDimensionsListBoxStyle}"
+                                          Padding="6" Margin="0,6,0,6"
+                                          IsEnabled="True"
+                                          
+                                          IsVisible="{Binding ViewBuilder.HiddenDimensionsVisibility}"
+                                          Items="{Binding ViewBuilder.HiddenDimensions}"
+                                          SelectedItem="{x:Null}">
+									<i:Interaction.Behaviors>
+										<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="HiddenDimensionsComboBox">
+											<ia:InvokeCommandAction Command="{Binding DimensionEventCommand}">
+												<ia:InvokeCommandAction.CommandParameter>
+													<MultiBinding Converter="{StaticResource DimensionEventArgsConverter}">
+														<Binding ElementName="HiddenDimensionsComboBox" Path="SelectedItem" />
+														<Binding >
+															<Binding.Source>
+																<x:Static Member="local:DimensionAction.UnHide"/>
+															</Binding.Source>
+														</Binding>
+													</MultiBinding>
+												</ia:InvokeCommandAction.CommandParameter>
+											</ia:InvokeCommandAction>
+										</ia:EventTriggerBehavior>
+									</i:Interaction.Behaviors>
+								</ComboBox>
+							</Grid>
+						</ScrollViewer>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+	<Style Selector="local|DimensionButton">
+		<Style.Resources>
+			<DataTemplate DataType="ListBoxItem" x:Key="DimensionButtonItemTemplate">
+				<Border Margin="2,3,2,3">
+					<CheckBox HorizontalAlignment="Left" VerticalAlignment="Center"
+								  Command="{Binding RelativeSource={RelativeSource AncestorType=local:DimensionButton}, Path=CheckboxCheckedCommand}"
+								  CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+								  Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource DimensionActionDescriptionConverter}}">
+
+						<CheckBox.IsChecked>
+							<MultiBinding Converter="{StaticResource DimensionEventCheckedConverter}" Mode="OneWay" >
+								<Binding RelativeSource="{RelativeSource AncestorType=local:DimensionButton}" Path="Dimension" Mode="OneWay" />
+								<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Content" Mode="OneWay"  />
+							</MultiBinding>
+						</CheckBox.IsChecked>
+						<CheckBox.IsEnabled>
+							<MultiBinding Converter="{StaticResource DimensionEventEnabledConverter}" Mode="OneWay">
+								<Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Path="Content" />
+								<Binding RelativeSource="{RelativeSource AncestorType=local:DimensionContainerCell}" Path="." />
+							</MultiBinding>
+						</CheckBox.IsEnabled>
+					</CheckBox>
+				</Border>
+			</DataTemplate>
+		</Style.Resources>
+
+		<Setter Property="PopupStyle">
+			<Setter.Value>
+				<Style Selector="Popup">
+					<Setter Property="VerticalOffset" Value="0"/>
+					<Setter Property="StaysOpen" Value="True"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ButtonStyle">
+			<Setter.Value>
+				<Style Selector="Button">
+					<Setter Property="Padding" Value="6"/>
+
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type local:DimensionButton}">
+					<local:DropDownButton x:Name="dropDownButton1"
+						DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:DimensionButton}}"
+						ItemTemplate="{StaticResource DimensionButtonItemTemplate}"
+						Command="{Binding Command}"
+						Content="{Binding Content}"
+						SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+						ButtonStyle="{Binding ButtonStyle}"
+						ListBoxStyle="{Binding ListBoxStyle}"
+						ListBoxItemStyle="{Binding ListBoxItemStyle}"
+						PopupStyle="{Binding PopupStyle}">
+
+						<local:DropDownButton.ItemsSource>
+							<sc:ArrayList>
+								<x:Static Member="local:DimensionAction.SortAscending"/>
+								<x:Static Member="local:DimensionAction.SortDescending"/>
+								<x:Static Member="local:DimensionAction.Hide"/>
+							</sc:ArrayList>
+						</local:DropDownButton.ItemsSource>
+						<i:Interaction.Behaviors>
+							<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="dropDownButton1" >
+								<ia:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding CommandParameter}"  />
+							</ia:EventTriggerBehavior>
+						</i:Interaction.Behaviors>
+					</local:DropDownButton>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="CommandParameter">
+			<Setter.Value>
+				<MultiBinding Converter="{StaticResource DimensionEventArgsConverter}" Mode="OneWay">
+					<Binding RelativeSource="{RelativeSource Self}" Path="Dimension" />
+					<Binding RelativeSource="{RelativeSource Self}" Path="SelectedItem" />
+				</MultiBinding>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style Selector="local|DropDownButton">
+		<Setter Property="ButtonStyle">
+			<Setter.Value>
+				<Style Selector="Button">
+					<Setter Property="Padding" Value="6"/>
+
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type local:DropDownButton }">
+					<StackPanel x:Name="sp1" Orientation="Vertical" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:DropDownButton}}">
+						<StackPanel.Resources>
+
+						</StackPanel.Resources>
+						<i:Interaction.Behaviors>
+							<ia:EventTriggerBehavior EventName="PointerLeave" SourceObject="sp1">
+								<ia:InvokeCommandAction Command="{Binding MouseLeaveCommand}"/>
+							</ia:EventTriggerBehavior>
+						</i:Interaction.Behaviors>
+						<Button x:Name="MartyMcButton" Classes.myClass="{TemplateBinding ButtonStyle}" Content="{TemplateBinding Content}" Command="{Binding ToggleDropDownCommand}"></Button>
+						<Popup IsOpen="{Binding IsDropDownOpen}" PlacementTarget="{Binding ElementName=MartyMcButton}" Classes.myClass="{Binding PopupStyle}">
+							<Border Margin="0,0,8,8" Padding="{Binding PopupPadding}" >
+								<ListBox x:Name="PART_ListBox"
+                                         Items="{Binding ItemsSource}"
+                                         SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                         ItemTemplate="{Binding ItemTemplate}"
+                                         Classes.myClass="{TemplateBinding ListBoxStyle}" >
+									<i:Interaction.Behaviors>
+										<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="PART_ListBox" >
+											<ia:ChangePropertyAction PropertyName="IsDropDownOpen" TargetObject="{Binding RelativeSource={RelativeSource AncestorType=local:DropDownButton}}" Value="False"/>
+											<ia:InvokeCommandAction Command="{Binding JunkCommand}" />
+											<ia:InvokeCommandAction Command="{Binding SelectionChangedCommand}"  />
+										</ia:EventTriggerBehavior>
+									</i:Interaction.Behaviors>
+								</ListBox>
+							</Border>
+						</Popup>
+					</StackPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+</Styles>

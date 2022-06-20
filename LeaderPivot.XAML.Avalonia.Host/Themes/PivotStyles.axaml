@@ -1,0 +1,121 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:leaderpivot="clr-namespace:LeaderAnalytics.LeaderPivot.XAML.Avalonia;assembly=LeaderAnalytics.LeaderPivot.XAML.Avalonia">
+	
+	<!--Non-Total cells-->
+
+	<Style Selector="leaderpivot|GroupHeaderCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource GroupHeaderBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|MeasureCell">
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource MeasureBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|MeasureLabelCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource MeasureLabelBackgroundBrush}"/>
+	</Style>
+
+	<!--Total cells-->
+
+	<Style Selector="leaderpivot|TotalCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource TotalBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|MeasureTotalLabelCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource TotalLabelBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|TotalHeaderCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource TotalHeaderBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|GrandTotalHeaderCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource GrandTotalHeaderBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|GrandTotalCell" >
+		<Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource GrandTotalBackgroundBrush}"/>
+	</Style>
+
+	<!--Controls-->
+	<Style Selector="leaderpivot|LeaderPivotControl">
+		<Setter Property="CellBorderBrush" Value="{DynamicResource CellBorderBrush}"/>
+		<Setter Property="CellBorderThickness" Value="1"/>
+	</Style>
+
+	<Style Selector="leaderpivot|DimensionButton">
+		<Setter Property="ButtonStyle">
+			<Setter.Value>
+				<Style Selector="Button" >
+					<Setter Property="Foreground" Value="{DynamicResource DimensionButtonForegroundBrush}"/>
+					<Setter Property="Background" Value="{DynamicResource DimensionButtonBackgroundBrush}"/>
+					<Setter Property="Padding" Value="6"/>
+					<Setter Property="Margin" Value="4"/>
+					<Setter Property="BorderThickness" Value="0"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ListBoxStyle">
+			<Setter.Value>
+				<Style Selector="ListBox">
+					<Setter Property="Foreground" Value="{DynamicResource DimensionButtonListboxForegroundBrush}"/>
+					<Setter Property="Background" Value="{DynamicResource DimensionButtonListboxBackgroundBrush}"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ListBoxItemStyle">
+			<Setter.Value>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Foreground" Value="{DynamicResource DimensionButtonListboxItemForegroundBrush}"/>
+					<Setter Property="Background" Value="{DynamicResource DimensionButtonListboxItemBackgroundBrush}"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!--Control containers-->
+
+	<Style Selector="leaderpivot|DimensionContainerCell" >
+		<Setter Property="Foreground" Value="{DynamicResource DimensionContainerCellForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource DimensionContainerCellBackgroundBrush}"/>
+	</Style>
+
+	<Style Selector="leaderpivot|MeasureContainerCell" >
+		<Setter Property="Foreground" Value="{DynamicResource MeasureContainerCellForegroundBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource MeasureContainerCellBackgroundBrush}"/>
+		<Setter Property="ReloadButtonStyle">
+			<Setter.Value>
+				<Style Selector="Button">
+					<Setter Property="Foreground" Value="{DynamicResource ReloadButtonForegroundBrush}"/>
+					<Setter Property="Background" Value="{DynamicResource ReloadButtonBackgroundBrush}"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="MeasureCheckBoxStyle">
+			<Setter.Value>
+				<Style Selector="CheckBox">
+					<Setter Property="Foreground" Value="{DynamicResource MeasureCheckboxForegroundBrush}"/>
+					<Setter Property="Background" Value="{DynamicResource MeasureCheckboxBackgroundBrush}"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="HiddenDimensionsListBoxStyle">
+			<Setter.Value>
+				<Style Selector="ComboBox">
+					<Setter Property="Foreground" Value="{DynamicResource HiddenDimListBoxForegroundBrush}"/>
+					<Setter Property="Background" Value="{DynamicResource HiddenDimListBoxBackgroundBrush}"/>
+				</Style>
+			</Setter.Value>
+		</Setter>
+	</Style>
+			
+</Styles>

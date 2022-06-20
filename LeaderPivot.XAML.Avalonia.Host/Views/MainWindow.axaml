@@ -1,21 +1,37 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:LeaderPivot.XAML.Avalonia.Host.ViewModels"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		xmlns:controls="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia"
-        x:Class="LeaderPivot.XAML.Avalonia.Host.Views.MainWindow"
+        xmlns:vm="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host.ViewModels"
+		xmlns:leaderpivot="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia"
+		xmlns:views="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host.Views"
+		xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="LeaderPivot.XAML.Avalonia.Host">
+        Title="LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-	<StackPanel Orientation="Vertical">
-        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-		<Border BorderBrush="Black" BorderThickness="1" Height="200" Width="200">
-            <controls:LeaderPivotControl  />
-		</Border>
-	</StackPanel>
+	<Window.Styles>
+		
+	</Window.Styles>
+	<Grid Background="CornflowerBlue">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="150"/>
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<views:ControlPanel x:Name="controlPanel"/>
+
+			
+				<leaderpivot:LeaderPivotControl BorderThickness="6" BorderBrush="Silver" Margin="20" Grid.Row="1" Height="800" Width="1200"
+                    DisplayGrandTotalOption="{Binding ElementName=controlPanel, Path=DisplayGrandTotalOption}"
+                    DisplayDimensionButtons="{Binding ElementName=controlPanel, Path=DisplayDimensionButtons}"
+                    DisplayMeasureSelectors="{Binding ElementName=controlPanel, Path=DisplayMeasureSelectors}"
+                    DisplayReloadDataButton="{Binding ElementName=controlPanel, Path=DisplayReloadDataButton}"
+                    FontSize="{Binding ElementName=controlPanel, Path=PivotControlFontSize}"
+                    CellPadding="{Binding ElementName=controlPanel, Path=CellPadding}"
+                    ViewBuilder="{Binding ViewBuilder}"
+                    IsBusy="{Binding IsBusy}"/>
+	</Grid>
 </Window>

@@ -1,8 +1,0 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:LeaderPivot.XAML.Avalonia"
-             x:Class="LeaderPivot.XAML.Avalonia.App">
-    <Application.Styles>
-		<StyleInclude Source = "avares://LeaderPivot.XAML.Avalonia/LeaderPivotControl.axaml" />
-    </Application.Styles>
-</Application>

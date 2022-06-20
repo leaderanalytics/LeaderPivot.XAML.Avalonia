@@ -1,13 +1,15 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:LeaderPivot.XAML.Avalonia.Host"
-			 
-             x:Class="LeaderPivot.XAML.Avalonia.Host.App">
+             xmlns:local="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host"
+		     xmlns:controls="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia"
+             x:Class="LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host.App">
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
 
     <Application.Styles>
         <FluentTheme Mode="Light"/>
+		<StyleInclude Source="avares://LeaderAnalytics.LeaderPivot.XAML.Avalonia/Themes/Generic.axaml"/>
     </Application.Styles>
+	
 </Application>
