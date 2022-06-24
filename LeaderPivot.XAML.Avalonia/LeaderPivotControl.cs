@@ -61,14 +61,14 @@ public class LeaderPivotControl : ContentControl
         AvaloniaProperty.Register<LeaderPivotControl, bool>(nameof(DisplayReloadDataButton));
 
 
-    public int CellPadding
+    public Thickness CellPadding
     {
-        get { return (int)GetValue(CellPaddingProperty); }
+        get { return (Thickness)GetValue(CellPaddingProperty); }
         set { SetValue(CellPaddingProperty, value); }
     }
 
     public static readonly AvaloniaProperty CellPaddingProperty =
-        AvaloniaProperty.Register<LeaderPivotControl, int>(nameof(CellPadding), 4);
+        AvaloniaProperty.Register<LeaderPivotControl, Thickness>(nameof(CellPadding), new Thickness(4));
 
 
     public Thickness CellBorderThickness

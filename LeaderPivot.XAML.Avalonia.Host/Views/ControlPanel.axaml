@@ -5,10 +5,12 @@
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              xmlns:local="clr-namespace:LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host.Views"
+			 xmlns:converters="using:LeaderAnalytics.LeaderPivot.XAML.Avalonia.Converters"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              x:Class="LeaderAnalytics.LeaderPivot.XAML.Avalonia.Host.Views.ControlPanel">
-	                  
-	
+	<ContentControl.Resources>
+		<converters:IntToThicknessConverter x:Key="intToThicknessConverter"/>
+	</ContentControl.Resources>
     
     <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:ControlPanel}}" VerticalAlignment="Top" Background="Cornsilk" >
         <Grid.RowDefinitions>
@@ -62,7 +64,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0">
                 <Label Content="{Binding CellPaddingString}" VerticalAlignment="Center"/>
-                <Slider Value="{Binding CellPadding}" Minimum="0" Maximum="10" Width="200" VerticalAlignment="Center"/>
+                <Slider Value="{Binding CellPadding, Converter={StaticResource intToThicknessConverter}}" Minimum="0" Maximum="10" Width="200" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
         <Button 

@@ -103,16 +103,33 @@ public class DropDownButton : ContentControl, INotifyPropertyChanged
     public static readonly AvaloniaProperty PopupPaddingProperty =
         AvaloniaProperty.Register<DropDownButton,Thickness>(nameof(PopupPadding));
 
+    public ICommand MouseLeaveCommand
+    {
+        get => (ICommand)GetValue(MouseLeaveCommandProperty); 
+        set => SetValue(MouseLeaveCommandProperty, value);
+    }
+
+    public static readonly AvaloniaProperty MouseLeaveCommandProperty =
+        AvaloniaProperty.Register<DropDownButton, ICommand>(nameof(MouseLeaveCommand));
+
+    public bool IsDropDownOpen
+    {
+        get => (bool)GetValue(IsDropDownOpenProperty);
+        set => SetValue(IsDropDownOpenProperty, value);
+    }
+
+    public static readonly AvaloniaProperty IsDropDownOpenProperty =
+        AvaloniaProperty.Register<DropDownButton, bool>(nameof(IsDropDownOpen));
 
 
     #endregion
 
-    private bool _IsDropDownOpen;
-    public bool IsDropDownOpen
-    {
-        get => _IsDropDownOpen;
-        set => SetProp(ref _IsDropDownOpen, value);
-    }
+    //private bool _IsDropDownOpen;
+    //public bool IsDropDownOpen
+    //{
+    //    get => _IsDropDownOpen;
+    //    set => SetProp(ref _IsDropDownOpen, value);
+    //}
 
     private ICommand _ToggleDropDownCommand;
     public ICommand ToggleDropDownCommand
@@ -121,21 +138,11 @@ public class DropDownButton : ContentControl, INotifyPropertyChanged
         set => SetProp(ref _ToggleDropDownCommand, value);
     }
 
-    private ICommand _MouseLeaveCommand;
-    public ICommand MouseLeaveCommand
-    {
-        get => _MouseLeaveCommand;
-        set => SetProp(ref _MouseLeaveCommand,value);
-    }
-
-
-
     public DropDownButton()
     {
-        
         TemplateApplied += DropDownButton_TemplateApplied;
         ToggleDropDownCommand = ReactiveCommand.Create(() => IsDropDownOpen = !IsDropDownOpen);
-        MouseLeaveCommand = ReactiveCommand.Create(() => IsDropDownOpen = false);
+        MouseLeaveCommand = ReactiveCommand.Create(() => IsDropDownOpen = false );
     }
 
     private void DropDownButton_TemplateApplied(object sender, TemplateAppliedEventArgs e)

@@ -50,6 +50,9 @@
         <Setter Property="TextAlignment" Value="Right"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
     </Style>
+	<Style Selector="ListBoxItem">
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+	</Style>
 
     <Style Selector="local|LeaderPivotControl" >
         <Setter Property="CellBorderBrush" Value="Black"/>
@@ -96,7 +99,7 @@
     </Style>
 
     <Style Selector=":is(local|BaseCell)" >
-		<Setter Property="Background" Value="LightGray"/>
+		
         <Setter Property="Template">
             <ControlTemplate>
                  <!--This border provides cell-specific background. Also proives padding based on value provided by LeaderPivotControl-->  
@@ -108,12 +111,13 @@
         </Setter>
     </Style>
 
-	<Style Selector="local|MeasureCell" >
-
+	<Style Selector="local|MeasureCell, local|MeasureLabelCell, local|GroupHeaderCell, local|DimensionContainerCell, local|MeasureContainerCell" >
+		<Setter Property="Background" Value="White"/>
 
 	</Style>
 
-	<Style Selector="local|TotalCell"  >
+	<Style Selector="local|TotalCell, local|MeasureTotalLabelCell, local|TotalHeaderCell, local|GrandTotalHeaderCell, local|GrandTotalCell">
+		<Setter Property="Background" Value="LightGray"/>
 	</Style>
 
 	<Style Selector="local|GrandTotalCell"  >
@@ -348,7 +352,6 @@
 			<Setter.Value>
 				<Style Selector="Button">
 					<Setter Property="Padding" Value="6"/>
-
 				</Style>
 			</Setter.Value>
 		</Setter>
@@ -374,7 +377,7 @@
 							</sc:ArrayList>
 						</local:DropDownButton.ItemsSource>
 						<i:Interaction.Behaviors>
-							<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="dropDownButton1" >
+							<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="{Binding #dropDownButton1}" >
 								<ia:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding CommandParameter}"  />
 							</ia:EventTriggerBehavior>
 						</i:Interaction.Behaviors>
@@ -393,6 +396,7 @@
 	</Style>
 
 	<Style Selector="local|DropDownButton">
+		
 		<Setter Property="ButtonStyle">
 			<Setter.Value>
 				<Style Selector="Button">
@@ -402,38 +406,33 @@
 			</Setter.Value>
 		</Setter>
 		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type local:DropDownButton }">
-					<StackPanel x:Name="sp1" Orientation="Vertical" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:DropDownButton}}">
-						<StackPanel.Resources>
-
-						</StackPanel.Resources>
+			<ControlTemplate TargetType="{x:Type local:DropDownButton}" >
+				<StackPanel x:Name="sp1" Orientation="Vertical" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:DropDownButton}}">
+						
+					<Button x:Name="MartyMcButton" Classes.myClass="{TemplateBinding ButtonStyle}" Content="{TemplateBinding Content}" Command="{Binding ToggleDropDownCommand}"></Button>
+					<Popup IsOpen="{Binding IsDropDownOpen}" PlacementTarget="{Binding ElementName=MartyMcButton}" Classes.myClass="{Binding PopupStyle}" x:Name="btnPopup" >
 						<i:Interaction.Behaviors>
-							<ia:EventTriggerBehavior EventName="PointerLeave" SourceObject="sp1">
-								<ia:InvokeCommandAction Command="{Binding MouseLeaveCommand}"/>
+							<ia:EventTriggerBehavior EventName="PointerLeave" SourceObject="{Binding #btnPopup}" >
+								<ia:InvokeCommandAction Command="{Binding MouseLeaveCommand}" />
 							</ia:EventTriggerBehavior>
 						</i:Interaction.Behaviors>
-						<Button x:Name="MartyMcButton" Classes.myClass="{TemplateBinding ButtonStyle}" Content="{TemplateBinding Content}" Command="{Binding ToggleDropDownCommand}"></Button>
-						<Popup IsOpen="{Binding IsDropDownOpen}" PlacementTarget="{Binding ElementName=MartyMcButton}" Classes.myClass="{Binding PopupStyle}">
-							<Border Margin="0,0,8,8" Padding="{Binding PopupPadding}" >
-								<ListBox x:Name="PART_ListBox"
-                                         Items="{Binding ItemsSource}"
-                                         SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                                         ItemTemplate="{Binding ItemTemplate}"
-                                         Classes.myClass="{TemplateBinding ListBoxStyle}" >
-									<i:Interaction.Behaviors>
-										<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="PART_ListBox" >
-											<ia:ChangePropertyAction PropertyName="IsDropDownOpen" TargetObject="{Binding RelativeSource={RelativeSource AncestorType=local:DropDownButton}}" Value="False"/>
-											<ia:InvokeCommandAction Command="{Binding JunkCommand}" />
-											<ia:InvokeCommandAction Command="{Binding SelectionChangedCommand}"  />
-										</ia:EventTriggerBehavior>
-									</i:Interaction.Behaviors>
-								</ListBox>
-							</Border>
-						</Popup>
-					</StackPanel>
-				</ControlTemplate>
-			</Setter.Value>
+						<Border Margin="0,0,8,8" Padding="{Binding PopupPadding}" >
+							<ListBox x:Name="PART_ListBox" 
+                                        Items="{Binding ItemsSource}"
+                                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                        ItemTemplate="{Binding ItemTemplate}"
+                                        Classes.myClass="{TemplateBinding ListBoxStyle}" >
+								<i:Interaction.Behaviors>
+									<ia:EventTriggerBehavior EventName="SelectionChanged" SourceObject="PART_ListBox" >
+										<ia:ChangePropertyAction PropertyName="IsDropDownOpen" TargetObject="{Binding $parent[local:DropDownButton]}" Value="False"/>
+										<ia:InvokeCommandAction Command="{Binding SelectionChangedCommand}"  />
+									</ia:EventTriggerBehavior>
+								</i:Interaction.Behaviors>
+							</ListBox>
+						</Border>
+					</Popup>
+				</StackPanel>
+			</ControlTemplate>
 		</Setter>
 	</Style>
 </Styles>

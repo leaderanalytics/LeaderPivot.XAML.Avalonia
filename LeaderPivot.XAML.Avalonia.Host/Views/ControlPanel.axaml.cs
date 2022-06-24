@@ -63,14 +63,14 @@ public partial class ControlPanel : UserControl, INotifyPropertyChanged
         AvaloniaProperty.Register<ControlPanel, bool>(nameof(UseDarkTheme), false);
 
 
-    public int CellPadding
+    public Thickness CellPadding
     {
-        get { return (int)GetValue(CellPaddingProperty); }
+        get { return (Thickness)GetValue(CellPaddingProperty); }
         set { SetValue(CellPaddingProperty, value); }
     }
 
     public static readonly AvaloniaProperty CellPaddingProperty =
-        AvaloniaProperty.Register<ControlPanel, int>(nameof(CellPadding), 4, false, BindingMode.OneWay, null, null, (s, e) => ((ControlPanel)s).RaisePropertyChanged(nameof(CellPaddingString)));
+        AvaloniaProperty.Register<ControlPanel, Thickness>(nameof(CellPadding), new Thickness(4), false, BindingMode.OneWay, null, null, (s, e) => ((ControlPanel)s).RaisePropertyChanged(nameof(CellPaddingString)));
 
 
     public int PivotControlFontSize
@@ -139,7 +139,7 @@ public partial class ControlPanel : UserControl, INotifyPropertyChanged
         set => SetProp(ref _SelectedThemeChangedCommand, value);
     }
 
-    public string CellPaddingString => $"Cell Padding ({CellPadding})";
+    public string CellPaddingString => $"Cell Padding ({CellPadding.Left})";
     public string FontSizeString => $"Font Size ({PivotControlFontSize})";
 
 
