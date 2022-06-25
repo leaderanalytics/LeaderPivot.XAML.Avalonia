@@ -359,7 +359,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type local:DimensionButton}">
 					<local:DropDownButton x:Name="dropDownButton1"
-						DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:DimensionButton}}"
+						DataContext="{Binding $parent[local:DimensionButton]}"
 						ItemTemplate="{StaticResource DimensionButtonItemTemplate}"
 						Command="{Binding Command}"
 						Content="{Binding Content}"
