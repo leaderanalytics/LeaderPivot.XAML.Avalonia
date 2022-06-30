@@ -148,7 +148,7 @@
 					<Border Background="{TemplateBinding Background}"
                             BorderThickness="0"
                             Padding="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellPadding}"
-                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}">
+                            DataContext="{Binding $parent[local:LeaderPivotControl]}">
 						<StackPanel Orientation="Horizontal">
 
 							<Button
@@ -176,12 +176,12 @@
 										<Setter Property="Margin" Value="3"/>
 										<Setter Property="Padding" Value="5,7,5,3"/>
 										<i:Interaction.Behaviors>
-											<ia:DataTriggerBehavior Binding="{Binding IsExpanded}" ComparisonCondition="Equal" Value="true">
+											<ia:DataTriggerBehavior Binding="{Binding $parent[local:GroupHeaderCell], Path=IsExpanded}" ComparisonCondition="Equal" Value="true">
 												<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Content" Value="&#xE936;"/>
 												<!--<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Padding" Value="5,7,5,3"/>-->
 												<!--https://github.com/wieslawsoltes/AvaloniaBehaviors/issues/59-->
 											</ia:DataTriggerBehavior>
-											<ia:DataTriggerBehavior Binding="{Binding IsExpanded}" ComparisonCondition="Equal" Value="false">
+											<ia:DataTriggerBehavior Binding="{Binding $parent[local:GroupHeaderCell], Path= IsExpanded}" ComparisonCondition="Equal" Value="false">
 												<!--<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Padding" Value="9,4,1,6"/>-->
 												<ia:ChangePropertyAction TargetObject="{Binding #btn}" PropertyName="Content" Value="&#xE937;"/>
 											</ia:DataTriggerBehavior>
@@ -204,8 +204,8 @@
 				<ControlTemplate TargetType="{x:Type local:DimensionContainerCell}" >
 					<Border Background="{TemplateBinding Background}"
                             BorderThickness="0"
-                            Padding="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=CellPadding}"
-                            DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}}">
+                            Padding="{Binding CellPadding}"
+                            DataContext="{Binding $parent[local:LeaderPivotControl]}">
 
 						<ScrollViewer
                             IsVisible="{Binding DisplayDimensionButtons}"
@@ -219,7 +219,7 @@
 										<local:DimensionButton
                                             Content="{Binding DisplayValue}"
                                             Dimension="{Binding}"
-                                            SelectionChangedCommand="{Binding RelativeSource={RelativeSource AncestorType=local:LeaderPivotControl}, Path=DimensionEventCommand}" >
+                                            SelectionChangedCommand="{Binding $parent[local:LeaderPivotControl].DimensionEventCommand}" >
 										</local:DimensionButton>
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
@@ -313,26 +313,27 @@
 		</Setter>
 	</Style>
 
-
-	<Style Selector="local|DimensionButton">
+	<Style Selector="local|DimensionButton" >
 		<Style.Resources>
-			<DataTemplate DataType="ListBoxItem" x:Key="DimensionButtonItemTemplate">
+			<DataTemplate DataType="local:DimensionAction" x:Key="DimensionButtonItemTemplate">
 				<Border Margin="2,3,2,3">
 					<CheckBox HorizontalAlignment="Left" VerticalAlignment="Center"
-								  Command="{Binding RelativeSource={RelativeSource AncestorType=local:DimensionButton}, Path=CheckboxCheckedCommand}"
-								  CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
-								  Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource DimensionActionDescriptionConverter}}">
+								  Command="{Binding $parent[local:DimensionButton], Path=CheckboxCheckedCommand}"
+								  CommandParameter="{Binding}"
+								  Content="{Binding, Converter={StaticResource DimensionActionDescriptionConverter}}">
 
 						<CheckBox.IsChecked>
 							<MultiBinding Converter="{StaticResource DimensionEventCheckedConverter}" Mode="OneWay" >
-								<Binding RelativeSource="{RelativeSource AncestorType=local:DimensionButton}" Path="Dimension" Mode="OneWay" />
-								<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Content" Mode="OneWay"  />
+								<!--<Binding Path ="{$parent[local:DimensionButton].Dimension}" Mode="OneWay" />-->
+								<Binding RelativeSource="{RelativeSource AncestorType=local:DimensionButton}" Path ="Dimension" Mode="OneWay" />
+								<Binding Source="{Binding}" Mode="OneWay"  />
 							</MultiBinding>
 						</CheckBox.IsChecked>
 						<CheckBox.IsEnabled>
 							<MultiBinding Converter="{StaticResource DimensionEventEnabledConverter}" Mode="OneWay">
-								<Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Path="Content" />
-								<Binding RelativeSource="{RelativeSource AncestorType=local:DimensionContainerCell}" Path="." />
+								<Binding Source="{Binding}" Path="Content" />
+								<!--<Binding Path="{$parent[local:DimensionContainerCell].}" />-->
+							    <Binding RelativeSource="{RelativeSource AncestorType=local:DimensionContainerCell}" Path="." />
 							</MultiBinding>
 						</CheckBox.IsEnabled>
 					</CheckBox>
@@ -370,7 +371,7 @@
 						PopupStyle="{Binding PopupStyle}">
 
 						<local:DropDownButton.ItemsSource>
-							<sc:ArrayList>
+							<sc:ArrayList x:DataType="local:DimensionAction">
 								<x:Static Member="local:DimensionAction.SortAscending"/>
 								<x:Static Member="local:DimensionAction.SortDescending"/>
 								<x:Static Member="local:DimensionAction.Hide"/>
@@ -385,6 +386,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+
 		<Setter Property="CommandParameter">
 			<Setter.Value>
 				<MultiBinding Converter="{StaticResource DimensionEventArgsConverter}" Mode="OneWay">
@@ -412,7 +414,7 @@
 					<Button x:Name="MartyMcButton" Classes.myClass="{TemplateBinding ButtonStyle}" Content="{TemplateBinding Content}" Command="{Binding ToggleDropDownCommand}"></Button>
 					<Popup IsOpen="{Binding IsDropDownOpen}" PlacementTarget="{Binding ElementName=MartyMcButton}" Classes.myClass="{Binding PopupStyle}" x:Name="btnPopup" >
 						<i:Interaction.Behaviors>
-							<ia:EventTriggerBehavior EventName="PointerLeave" SourceObject="{Binding #btnPopup}" >
+							<ia:EventTriggerBehavior EventName="PointerLeave" SourceObject="{Binding #PART_ListBox}" >
 								<ia:InvokeCommandAction Command="{Binding MouseLeaveCommand}" />
 							</ia:EventTriggerBehavior>
 						</i:Interaction.Behaviors>
