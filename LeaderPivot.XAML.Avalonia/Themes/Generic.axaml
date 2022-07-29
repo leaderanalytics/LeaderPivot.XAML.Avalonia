@@ -318,21 +318,19 @@
 			<DataTemplate DataType="local:DimensionAction" x:Key="DimensionButtonItemTemplate">
 				<Border Margin="2,3,2,3">
 					<CheckBox HorizontalAlignment="Left" VerticalAlignment="Center"
-								  Command="{Binding $parent[local:DimensionButton], Path=CheckboxCheckedCommand}"
+								  Command="{Binding $parent[local:DimensionButton].CheckboxCheckedCommand}"
 								  CommandParameter="{Binding}"
 								  Content="{Binding, Converter={StaticResource DimensionActionDescriptionConverter}}">
 
 						<CheckBox.IsChecked>
 							<MultiBinding Converter="{StaticResource DimensionEventCheckedConverter}" Mode="OneWay" >
-								<!--<Binding Path ="{$parent[local:DimensionButton].Dimension}" Mode="OneWay" />-->
-								<Binding RelativeSource="{RelativeSource AncestorType=local:DimensionButton}" Path ="Dimension" Mode="OneWay" />
-								<Binding Source="{Binding}" Mode="OneWay"  />
+								<Binding Path="$parent[local:DimensionButton].Dimension" Mode="OneWay" />
+								<Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Content" Mode="OneWay" />
 							</MultiBinding>
 						</CheckBox.IsChecked>
 						<CheckBox.IsEnabled>
 							<MultiBinding Converter="{StaticResource DimensionEventEnabledConverter}" Mode="OneWay">
 								<Binding Source="{Binding}" Path="Content" />
-								<!--<Binding Path="{$parent[local:DimensionContainerCell].}" />-->
 							    <Binding RelativeSource="{RelativeSource AncestorType=local:DimensionContainerCell}" Path="." />
 							</MultiBinding>
 						</CheckBox.IsEnabled>
